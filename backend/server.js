@@ -5,22 +5,26 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// import restaurantRoutes router file
-const restaurantRouter = require('./routes/restaurantRoutes.js');
-
-// import restaurantRoutes router file
-const reviewRouter = require('./routes/reviewRoutes.js')
+// import controller file
+const controller = require('./controller.js');
 
 // enable cors + parse json
 app.use(cors());
 app.use(express.json());
 
-// restaurantRouter router handler for '/restaurants' url
-app.use('/restaurants', restaurantRouter);
+// GET route: 'read' queries to restaurants table
+app.get('/restaurants', controller.getRestaurants, (req, res) =>
+  res.status(200).json(res.locals.restaurants)
+);
 
-// reviewRouter route handler for 'reviews' url
-app.use('/reviews', reviewRouter);
+app.post('/restaurants', controller.getRestaurants, (req, res) =>
+  res.status(200).json(res.locals.restaurants)
+);
 
+// POST route: 'create' entries to insert into reviews table
+app.post('/reviews', controller.submitReview, (req, res) =>
+  res.status(200).json(res.locals.addedReview)
+);
 
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));

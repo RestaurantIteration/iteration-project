@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {updateReview} from '../slices/reviewSlice'
+import {updateReview} from '../features/reviewSlice'
 
 const ReviewContainer = () => {
   const dispatch = useDispatch();

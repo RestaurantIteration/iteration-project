@@ -13,27 +13,24 @@ module.exports = {
     bundle: path.resolve(__dirname, 'src/index.js'),
   },
   // set up output folder
-  // output: {
-  //   path: path.resolve(__dirname, 'dist'),
-  //   // [name] will evaluate to key name in 'entry'
-  //   // [contenthash] creates unique hash code
-  //   filename: '[name].[contenthash].js',
-  //   // refresh new bundle.js file in '/dist' => 'npm run dev'
-  //   clean: true,
-  //   // set name for asset created in '/dist'
-  //   assetModuleFilename: '[name][ext]',
-  // },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    // [name] will evaluate to key name in 'entry'
+    // [contenthash] creates unique hash code
+    filename: '[name].[contenthash].js',
+    // refresh new bundle.js file in '/dist' => 'npm run dev'
+    clean: true,
+    // set name for asset created in '/dist'
+    assetModuleFilename: '[name][ext]',
+  },
   // 'npm run build' => create map source file in '/dist'
   devtool: 'source-map',
   // set up development server
   devServer: {
-    // static: {
-    //   directory: path.resolve(__dirname, 'dist'),
-    // },
-    port: 8080,
-    proxy: {
-      '/': 'http://localhost:3000',
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
     },
+    port: 8080,
     open: true,
     hot: true,
     compress: true,
@@ -67,14 +64,16 @@ module.exports = {
         // (RegEx expression)
         // rule will apply to any file that ends in .png/svg/jpg/jpeg/gif
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: './public',
+        type: 'assets/resource',
       },
     ],
   },
   // set up plugins
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      title: 'untitled',
+      filename: 'index.html',
+      template: 'src/template.html',
     }),
   ],
 };
