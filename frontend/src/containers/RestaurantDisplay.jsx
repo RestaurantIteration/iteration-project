@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateRest } from '../slices/restaurantsSlice';
+import { updateRest } from '../features/restaurantsSlice';
 import RestaurantCard from '../components/RestaurantCard.jsx';
 //import that slice of state here
 
