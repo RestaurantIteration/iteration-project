@@ -14,7 +14,7 @@ import {
 } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { moveCenter } from '../slices/googleSlice';
-const { GOOGLE_API_KEY } = require('../../server/envVars');
+const { GOOGLE_API_KEY, GOOGLE_MAP_ID } = require('../../server/envVars');
 
 export default function Map() {
   const [activeMarker, setActiveMarker] = useState(null);
@@ -32,7 +32,7 @@ export default function Map() {
   const options = useMemo(
     () => ({
       // what else might we need here?
-      mapId: 'dd51250f4e314a82',
+      mapId: GOOGLE_MAP_ID,
     }),
     []
   );
