@@ -1,5 +1,5 @@
 // require model & pg-format
-const db = require('../backend/models.js');
+const db = require('../models/models.js');
 const format = require('pg-format');
 
 const controller = {};
