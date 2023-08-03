@@ -4,7 +4,9 @@ import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import './styles/main.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import RestaurantDisplay from './containers/RestaurantDisplay';
+import RestaurantDisplay, {
+  loader as restDisplayLoader,
+} from './containers/RestaurantDisplay';
 import RestaurantCard from './components/RestaurantCard';
 import NavBar from './components/Navbar';
 import RestaurantQuery from './components/RestaurantQuery';
@@ -16,7 +18,12 @@ const router = createBrowserRouter([
     element: <BodyContainer />,
     children: [
       { path: '/', element: <RestaurantDisplay /> },
-      { path: '/restaurant', element: <RestaurantCard /> },
+      {
+        path: '/:location',
+        element: <RestaurantDisplay />,
+        loader: restDisplayLoader,
+      },
+      { path: '/restaurant/:id', element: <RestaurantCard /> },
     ],
   },
 ]);

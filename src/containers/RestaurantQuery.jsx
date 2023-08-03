@@ -1,85 +1,82 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateRest, setLocation, resetOffset, setStatus } from '../slices/restaurantsSlice';
-import { moveCenter } from '../slices/googleSlice';
-//import wobbe from '../frontend/assets/logo.png';
+import { setStatus } from '../slices/restaurantsSlice';
+import { redirect, useNavigate } from 'react-router-dom';
+
+/*
+export async function action({ request }) {
+  try {
+    const backendUrl = 'http://localhost:3000/';
+    const jsonData = await fetch(backendUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ location: params.location }),
+    });
+    const restaurantData = await jsonData.json();
+
+    const ele = document.querySelector('.resDisplay');
+    if (ele) ele.scrollTop = 0;
+
+    const newCenter = {
+      lat: restaurantData.region.center.latitude,
+      lng: restaurantData.region.center.longitude,
+    };
+    dispatch(setLocation(params.location));
+    // dispatch(resetOffset());
+    dispatch(updateRest(restaurantData.businesses));
+    dispatch(moveCenter(newCenter));
+
+    redirect(`/${values.location}`);
+  } catch (err) {
+    console.log(`There was an error fetching restaurant data: ${err}`);
+  }
+}
+*/
 
 const RestaurantQuery = () => {
-	// create an action for one drop-down
-	const query = useSelector(state => state.query);
-	const dispatch = useDispatch();
+  const query = useSelector((state) => state.query);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	/*
-- query will include all of the query selectors we need to filter our restaurants
-- get request to restaurants with the query parameters
-- call updateRest and set to new list of restaurants
+  let location = '';
 
-*/
-	let location = '';
+  const getInputText = (e) => {
+    location = e.target.value;
+  };
 
-	const fetchRestaurants = async location => {
-		try {
-			const backendUrl = 'http://localhost:3000/';
-			const jsonData = await fetch(backendUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'Application/JSON',
-					Accept: 'application/json'
-				},
-				body: JSON.stringify({ location })
-			});
-			const restaurantData = await jsonData.json();
+  const searchHandler = async () => {
+    dispatch(setStatus('loading'));
+    navigate(`/${location}`);
+  };
 
-			dispatch(setLocation(location));
-			dispatch(resetOffset());
-			dispatch(updateRest(restaurantData.businesses));
+  return (
+    <div className='queryFormContainer'>
+      <label
+        id='nameLabel'
+        htmlFor='restaurant'
+      >
+        <input
+          onChange={getInputText}
+          placeholder='Search by location...'
+          name='restaurant'
+          type='text'
+          id='restaurantName'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') searchHandler();
+          }}
+        />
+      </label>
+      <button
+        onClick={searchHandler}
+        className='search-button'
+      >
+        Search
+      </button>
 
-			const ele = document.querySelector('.resDisplay');
-			if (ele) ele.scrollTop = 0;
-
-			const newCenter = {
-				lat: restaurantData.region.center.latitude,
-				lng: restaurantData.region.center.longitude
-			};
-			dispatch(moveCenter(newCenter));
-		} catch (err) {
-			console.log(`There was an error fetching restaurant data: ${err}`);
-		}
-	};
-
-	const getInputText = e => {
-		location = e.target.value;
-	};
-
-	const searchHandler = async () => {
-		dispatch(setStatus('loading'));
-		await fetchRestaurants(location);
-		dispatch(setStatus('succeeded'));
-	};
-
-	// useEffect(() => {
-	// 	fetchRestaurants();
-	// }, [query]);
-
-	return (
-		<div className='queryFormContainer'>
-			<label id='nameLabel' htmlFor='restaurant'>
-				<input
-					onChange={getInputText}
-					placeholder='Search by location...'
-					name='restaurant'
-					type='text'
-					id='restaurantName'
-					onKeyDown={e => {
-						if (e.key === 'Enter') searchHandler();
-					}}
-				/>
-			</label>
-			<button onClick={searchHandler} className='search-button'>
-				Search
-			</button>
-
-			{/* <label className='dropDownLabel' htmlFor='cuisine'>
+      {/* <label className='dropDownLabel' htmlFor='cuisine'>
           Cuisine:
           <select
             className='dropDown'
@@ -184,8 +181,8 @@ const RestaurantQuery = () => {
             <option value='25'>25 km</option>
           </select>
         </label> */}
-		</div>
-	);
+    </div>
+  );
 };
 /*
 Location input field removed
