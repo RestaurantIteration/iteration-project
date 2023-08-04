@@ -1,70 +1,23 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  updateRest,
-  setLocation,
-  resetOffset,
-  setStatus,
-} from '../slices/restaurantsSlice';
-import { moveCenter } from '../slices/googleSlice';
-//import wobbe from '../frontend/assets/logo.png';
+import { setStatus, setLocation } from '../slices/restaurantsSlice';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const RestaurantQuery = () => {
-  // create an action for one drop-down
-  const query = useSelector((state) => state.query);
+  const state = useSelector((state) => state.restaurants.state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  /*
-- query will include all of the query selectors we need to filter our restaurants
-- get request to restaurants with the query parameters
-- call updateRest and set to new list of restaurants
-
-*/
   let location = '';
-
-  const fetchRestaurants = async (location) => {
-    try {
-      const backendUrl = 'http://localhost:3000/';
-      const jsonData = await fetch(backendUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'Application/JSON',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ location }),
-      });
-      const restaurantData = await jsonData.json();
-
-      dispatch(setLocation(location));
-      dispatch(resetOffset());
-      dispatch(updateRest(restaurantData.businesses));
-
-      const ele = document.querySelector('.resDisplay');
-      if (ele) ele.scrollTop = 0;
-
-      const newCenter = {
-        lat: restaurantData.region.center.latitude,
-        lng: restaurantData.region.center.longitude,
-      };
-      dispatch(moveCenter(newCenter));
-    } catch (err) {
-      console.log(`There was an error fetching restaurant data: ${err}`);
-    }
-  };
-
   const getInputText = (e) => {
     location = e.target.value;
   };
 
   const searchHandler = async () => {
     dispatch(setStatus('loading'));
-    await fetchRestaurants(location);
-    dispatch(setStatus('succeeded'));
+    dispatch(setLocation(location));
+    navigate(`/${location}`);
   };
-
-  // useEffect(() => {
-  // 	fetchRestaurants();
-  // }, [query]);
 
   return (
     <div className='queryFormContainer'>
@@ -75,21 +28,20 @@ const RestaurantQuery = () => {
         <input
           onChange={getInputText}
           placeholder='Search by location...'
-          name='restaurant'
+          name='location'
           type='text'
-          id='restaurantName'
+          id='location'
           onKeyDown={(e) => {
             if (e.key === 'Enter') searchHandler();
           }}
         />
       </label>
       <button
-        onClick={searchHandler}
         className='search-button'
+        onClick={searchHandler}
       >
-        Search
+        Search This
       </button>
-
       {/* <label className='dropDownLabel' htmlFor='cuisine'>
           Cuisine:
           <select

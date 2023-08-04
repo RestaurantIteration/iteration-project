@@ -11,11 +11,13 @@ import RestaurantCard from './components/RestaurantCard';
 import NavBar from './components/Navbar';
 import RestaurantQuery from './components/RestaurantQuery';
 import BodyContainer from './containers/Bodycontainer';
+import ErrorPage from './components/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <BodyContainer />,
+    // errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <RestaurantDisplay /> },
       {
@@ -34,9 +36,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <Provider store={store}>
     <NavBar />
-    <RestaurantQuery />
-    <div className='app'>
-      <RouterProvider router={router} />
-    </div>
+    <RouterProvider router={router} />
   </Provider>
 );

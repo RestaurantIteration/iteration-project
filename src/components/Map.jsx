@@ -13,7 +13,6 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { moveCenter } from '../slices/googleSlice';
 const { GOOGLE_API_KEY } = require('../../server/envVars');
 
 let mapRef;
@@ -21,8 +20,6 @@ let mapRef;
 export default function Map() {
   const [activeMarker, setActiveMarker] = useState(null);
   const restaurants = useSelector((state) => state.restaurants.restList);
-
-  const dispatch = useDispatch();
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',

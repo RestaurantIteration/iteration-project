@@ -23,13 +23,13 @@ app.use(cors());
 app.use(express.json());
 
 // route handler that will invoke reviewRouter middleware once a restaurant card is clicked
-app.use('/restaurant', reviewRouter);
+app.use('/api/restaurant', reviewRouter);
 
 // googleRouter route handler for '/google' url
-app.use('/google', googleRouter);
+app.use('/api/google', googleRouter);
 
 // route handler that will load the page upon initial render
-app.use('/', restaurantRouter);
+app.use('/api/', restaurantRouter);
 
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
