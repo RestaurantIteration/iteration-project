@@ -15,7 +15,13 @@ const RestaurantCard = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { name, image_url, rating, review_count, price } = info;
   const additionalData = {
+    name: name,
+    image_url: image_url,
+    rating: rating,
+    review_count: review_count,
+    price: price,
     address: address,
     phone: phone,
     transactions: transactions,
@@ -26,20 +32,23 @@ const RestaurantCard = ({
     try {
       dispatch(moveCenter(position));
       const jsonData = await fetch(
-        `http://localhost:3000/api/restaurant/${restaurantId}`
+        `http://localhost:3000/restaurant/${restaurantId}`
       );
       const reviews = await jsonData.json();
       console.log(reviews, 'reviews');
       dispatch(updateReview(reviews));
       dispatch(updateAdditionalData(additionalData));
       navigate('/restaurant');
+      // store the name, image_url, rating, review_count, categories, and price in state
+      // dispatch(updateinfo(name, image_url, rating, review_count, categories, price));
+      // after the navigate, need to pull the information out of state on the body component
+      // const info = useSelector((state) => state.info);
     } catch (err) {
       console.log(`There was an error fetching restaurant reviews: ${err}`);
     }
     navigate('/restaurant');
   };
 
-  const { name, image_url, rating, review_count, price } = info;
   const position = {
     lat: info.coordinates.latitude,
     lng: info.coordinates.longitude,

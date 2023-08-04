@@ -70,6 +70,7 @@ h1 {
   top: 0;
   width: 100vw;
   padding: 0;
+  z-index: 1;
 }
 
 .navbar p {
@@ -111,6 +112,8 @@ h1 {
 
 .resCard {
   text-align: center;
+  overflow: visible;
+  height: max-content;
   flex-basis: 45%;
   min-height: 25em;
   display: flex;
@@ -278,6 +281,7 @@ h1 {
 
 #bodycontainer {
   display: flex;
+  overflow: auto;
   flex-direction: row;
   padding: 0.5em;
   height: 100%;
@@ -297,5 +301,21 @@ h1 {
 #restaurantPreview {
   height: 10em;
   width: 15em;
+  align-self: center;
+}
+
+.resCard .search-button {
+  padding: 0 2em;
+  margin: 1em;
+  height: 100%;
+  background: #f17929;
+  color: #fff;
+  font-size: 1em;
+  font-family: 'Ubuntu', sans-serif;
+  border: 0;
+  outline: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
   align-self: center;
 }
