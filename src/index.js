@@ -7,9 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RestaurantDisplay, {
   loader as restDisplayLoader,
 } from './containers/RestaurantDisplay';
-import RestaurantCard from './components/RestaurantCard';
+import RestaurantReviewCard from './components/RestaurantReviewCard';
 import NavBar from './components/Navbar';
-import RestaurantQuery from './components/RestaurantQuery';
 import BodyContainer from './containers/Bodycontainer';
 import ErrorPage from './components/ErrorPage';
 
@@ -25,7 +24,7 @@ const router = createBrowserRouter([
         element: <RestaurantDisplay />,
         loader: restDisplayLoader,
       },
-      { path: '/restaurant/:id', element: <RestaurantCard /> },
+      { path: '/restaurant/:id', element: <RestaurantReviewCard /> },
     ],
   },
 ]);

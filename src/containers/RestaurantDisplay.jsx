@@ -37,18 +37,20 @@ export default function RestaurantDisplay() {
 
   const results = useLoaderData();
   useEffect(() => {
-    const ele = document.querySelector('.resDisplay');
-    if (ele) ele.scrollTop = 0;
+    if (results) {
+      const ele = document.querySelector('.resDisplay');
+      if (ele) ele.scrollTop = 0;
 
-    const newCenter = {
-      lat: results.region.center.latitude,
-      lng: results.region.center.longitude,
-    };
+      const newCenter = {
+        lat: results.region.center.latitude,
+        lng: results.region.center.longitude,
+      };
 
-    dispatch(resetOffset());
-    dispatch(updateRest(results.businesses));
-    dispatch(moveCenter(newCenter));
-    dispatch(setStatus('succeeded'));
+      dispatch(resetOffset());
+      dispatch(updateRest(results.businesses));
+      dispatch(moveCenter(newCenter));
+      dispatch(setStatus('succeeded'));
+    }
   });
 
   const handleScroll = (e) => {

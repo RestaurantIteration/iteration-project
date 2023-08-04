@@ -20,6 +20,7 @@ let mapRef;
 export default function Map() {
   const [activeMarker, setActiveMarker] = useState(null);
   const restaurants = useSelector((state) => state.restaurants.restList);
+  const stateCenter = useSelector((state) => state.google.center);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -28,7 +29,7 @@ export default function Map() {
   });
 
   const defaultZoom = 14;
-  const defaultCenter = useMemo(() => stateCenter, []);
+  const defaultCenter = useMemo(() => stateCenter, [{ lat: 0, lng: 0 }]);
   const options = useMemo(
     () => ({
       // what else might we need here?
@@ -48,9 +49,9 @@ export default function Map() {
   const onLoad = useCallback(async (map) => {
     mapRef.current = map;
   }, []);
-  const stateCenter = useSelector((state) =>
-    mapRef.current?.panTo(state.google.center)
-  );
+  // const stateCenter = useSelector((state) =>
+  //   mapRef.current?.panTo(state.google.center)
+  // );
 
   const renderMarker = useCallback((rest) => {
     return (

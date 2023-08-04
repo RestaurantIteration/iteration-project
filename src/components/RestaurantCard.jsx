@@ -28,25 +28,25 @@ const RestaurantCard = ({
     categories: categories,
   };
 
-  const handleRestaurantClick = async (restaurantId) => {
+  const handleRestaurantClick = async (restaurantId, position) => {
     try {
       dispatch(moveCenter(position));
       const jsonData = await fetch(
-        `http://localhost:3000/restaurant/${restaurantId}`
+        `http://localhost:3000/api/restaurant/${restaurantId}`
       );
       const reviews = await jsonData.json();
       console.log(reviews, 'reviews');
       dispatch(updateReview(reviews));
       dispatch(updateAdditionalData(additionalData));
-      navigate('/restaurant');
+      navigate(`/restaurant/${restaurantId}`);
       // store the name, image_url, rating, review_count, categories, and price in state
       // dispatch(updateinfo(name, image_url, rating, review_count, categories, price));
       // after the navigate, need to pull the information out of state on the body component
       // const info = useSelector((state) => state.info);
     } catch (err) {
       console.log(`There was an error fetching restaurant reviews: ${err}`);
+      return err;
     }
-    navigate('/restaurant');
   };
 
   const position = {
